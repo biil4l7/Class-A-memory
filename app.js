@@ -774,6 +774,9 @@ function switchReviewTab(tab) {
 }
 
 async function initReview() {
+  // Don't rebuild if content is already visible (avoids wiping loaded data)
+  const existing = $('r-content-wrap');
+  if (existing && existing.style.display !== 'none') return;
   buildReviewPanel();
   try {
     const session = await dbGetSession();
@@ -785,12 +788,15 @@ async function adminLogin() {
   const email = $('r-email').value.trim();
   const pass  = $('r-pass').value;
   if (!email || !pass) { toast('Enter email and password'); return; }
+  const btn = document.querySelector('#r-login-wrap .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>'; }
   try {
     await dbLogin(email, pass);
-    showReviewContent();
+    await showReviewContent();
   } catch (e) {
     toast('Login failed — check credentials');
     console.error(e);
+    if (btn) { btn.disabled = false; btn.innerHTML = t('sign_in') + ' <span class="btn-icon">→</span>'; }
   }
 }
 
@@ -806,18 +812,31 @@ async function showReviewContent() {
 }
 
 async function loadAllMessages() {
+  const sp = $('r-students-pane');
+  const tp = $('r-teachers-pane');
+  if (sp) sp.innerHTML = '<div class="empty-state" style="opacity:0.5">Loading…</div>';
+  if (tp) tp.innerHTML = '<div class="empty-state" style="opacity:0.5">Loading…</div>';
   try {
     const [sMsgs, tMsgs] = await Promise.all([
       dbGetStudentMessages(),
       dbGetTeacherMessages(),
     ]);
-    $('rc-students').textContent = sMsgs.length;
-    $('rc-teachers').textContent = tMsgs.length;
+    const sc = $('rc-students');
+    const tc = $('rc-teachers');
+    if (sc) sc.textContent = sMsgs.length;
+    if (tc) tc.textContent = tMsgs.length;
     renderStudentMessages(sMsgs);
     renderTeacherMessages(tMsgs);
   } catch (e) {
-    toast('Error loading messages');
-    console.error(e);
+    console.error('loadAllMessages error:', e);
+    const errHtml = `
+      <div class="empty-state" style="color:#D5575E">
+        <div style="font-size:1.1rem;margin-bottom:12px">⚠ Could not load messages</div>
+        <div style="font-size:11px;opacity:0.7;margin-bottom:16px">${e?.message || 'Permission denied or network error'}</div>
+        <button class="btn btn-ghost" style="font-size:11px;padding:8px 18px" onclick="loadAllMessages()">Retry</button>
+      </div>`;
+    if (sp) sp.innerHTML = errHtml;
+    if (tp) tp.innerHTML = errHtml;
   }
 }
 
