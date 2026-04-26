@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>Class A — Farewell 2025</title>
+  <meta name="description" content="Class A farewell website — leave your words, they last forever."/>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Floating orbs for extra depth -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Toast notification -->
+  <div id="toast"></div>
+
+  <div id="app">
+
+    <!-- ══════════════════ HERO ══════════════════ -->
+    <header class="hero">
+      <div class="hero-glow"></div>
+
+      <div class="hero-year">2025 · Class A · Farewell</div>
+
+      <h1 class="hero-title">
+        Goodbye<br/><em>Class A</em>
+      </h1>
+
+      <div class="hero-class"></div>
+
+      <div class="hero-divider">
+        <div class="hero-divider-gem"></div>
+      </div>
+
+      <p class="hero-sub" id="hero-sub">Leave your words — they last forever</p>
+
+      <!-- Language switcher -->
+      <div class="lang-bar">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">English</button>
+        <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">عربي</button>
+        <button class="lang-btn" data-lang="ku" onclick="setLang('ku')">کوردی</button>
+      </div>
+    </header>
+
+    <!-- ══════════════════ NAV ══════════════════ -->
+    <nav class="nav-wrap">
+      <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="students" onclick="switchTab('students')">Students</button>
+        <button class="tab-btn" data-tab="teachers" onclick="switchTab('teachers')">Teachers</button>
+        <button class="tab-btn" data-tab="review"   onclick="switchTab('review')">Review</button>
+      </div>
+    </nav>
+
+    <!-- ══════════════════ PANELS ══════════════════ -->
+    <main class="panels">
+      <section class="panel active" id="panel-students"></section>
+      <section class="panel"        id="panel-teachers"></section>
+      <section class="panel"        id="panel-review"></section>
+    </main>
+
+  </div><!-- /#app -->
+
+  <!-- ══════════════════ WELCOME MODAL ══════════════════ -->
+  <div id="welcome-overlay" class="welcome-overlay">
+    <div class="welcome-modal">
+      <!-- Decorative top gem -->
+      <div class="welcome-gem-row">
+        <div class="welcome-gem"></div>
+      </div>
+
+      <!-- Language switcher inside modal -->
+      <div class="welcome-lang-bar">
+        <button class="welcome-lang-btn active" data-wlang="en" onclick="welcomeSetLang('en')">English</button>
+        <button class="welcome-lang-btn" data-wlang="ar" onclick="welcomeSetLang('ar')">عربي</button>
+        <button class="welcome-lang-btn" data-wlang="ku" onclick="welcomeSetLang('ku')">کوردی</button>
+      </div>
+
+      <!-- Content -->
+      <div class="welcome-body">
+        <div class="welcome-eyebrow" id="w-eyebrow">A message from the creator</div>
+
+        <div class="welcome-avatar">B</div>
+
+        <div class="welcome-name" id="w-name">Bilal Abdulla</div>
+
+        <div class="welcome-divider"></div>
+
+        <p class="welcome-msg" id="w-msg">
+          I created this for all of us — so it'll stay in our memory forever.
+          Always remember the time we spent together.
+          I hope we're all glad that we got to meet each other. 🤍
+        </p>
+      </div>
+
+      <!-- Close button -->
+      <button class="welcome-close-btn" id="w-close-btn" onclick="closeWelcome()">
+        <span id="w-enter-text">Enter</span>
+        <span class="welcome-close-arrow">→</span>
+      </button>
+
+      <!-- Bottom signature -->
+      <div class="welcome-sig" id="w-sig">Class A · 2025</div>
+    </div>
+  </div>
+
+  <!-- Load DB layer first, then app logic -->
+  <script src="supabase.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
