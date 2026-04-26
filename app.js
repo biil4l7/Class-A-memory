@@ -14,7 +14,7 @@ const STUDENT_NAMES = [
   'Mahmud', 'Karox', 'Shallaw', 'Ibrahem', 'Asma',
   'Mazn', 'Rayan Hersh', 'Rayan Ahmed', 'Ashna Xalid', 'Dina Tayb',
   'Taza', 'Dllxosh', 'Dina Adnan', 'Ragaz Taha', 'Esra',
-  'Eman', 'Zhwan', 'Sara Mawlan', 
+  'Eman', 'Zhwan', 'Sara Mawlan', 'Roshna',
 ];
 
 const TEACHER_NAMES = [
@@ -155,11 +155,11 @@ const i18n = {
     ph_msg: 'ئەوەی لە دڵتدایە بڵێ…',
     send: 'پەیام بنێرە',
     success_title: 'وشەکانت تۆمار کران.',
-    success_sub: 'پۆلە ئەلف هەتاهەتایە تەنگی ئەوانە دەبێت.',
+    success_sub: 'کڵاسی A هەتاهەتایە تەنگی ئەوانە دەبێت.',
     write_another: 'یەکی تر بنووسە',
     eyebrow_teachers: 'بۆ مامۆستایان',
     title_teachers: 'خوێندکارەکانت هەڵبژێرە',
-    desc_teachers: 'ناوت هەڵبژێرە، تەنها ٣ خوێندکار هەڵبژێرە، دوای ئەوە تێبینییەکی تایبەت بۆ هەر یەکێکیان بنووسە.',
+    desc_teachers: '  تەنها ٣ خوێندکار هەڵبژێرە، دوای ئەوە تێبینییەکی تایبەت بۆ هەر یەکێکیان بنووسە.',
     label_teacher_name: 'ناوت',
     step1: 'ناوت', step2: 'خوێندکار هەڵبژێرە', step3: 'تێبینی بنووسە',
     continue: 'بەردەوام بە',
@@ -168,10 +168,10 @@ const i18n = {
     write_note: 'تێبینیەکانت بنووسە',
     submit_all: 'هەموو پەیامەکان بنێرە',
     teacher_success_title: 'هەموو پەیامەکان تۆمار کران.',
-    teacher_success_sub: 'خوێندکارەکانت هەتاهەتایە وشەکانت لەگەڵ دەبن.',
+    teacher_success_sub: 'خوێندکارەکانت هەتاهەتایە وشەکان لەگەڵ دەبن.',
     write_again: 'دووبارە بنووسە',
     review_title: 'پێداچوونەوەی بەڕێوەبەر',
-    review_desc: 'بچووژێو بۆ بینینی هەموو پەیامەکان.',
+    review_desc: 'بچۆ ژوورەوە بۆ بینینی هەموو پەیامەکان.',
     email: 'ئیمەیڵ', password: 'وشەی نهێنی',
     sign_in: 'چوونە ژووەوە',
     sign_out: 'چوونە دەرەوە',
@@ -185,14 +185,14 @@ const i18n = {
     hero_sub: 'وشەکانت بهێڵە — هەتاهەتایە دەمێنن',
     ph_pass: '••••••••',
     select_name: '— ناوت هەڵبژێرە —',
-    student_login_title: 'بچووژێوە بۆ بەردەوام بوون',
+    student_login_title: 'بچۆ ژوورەوە بۆ بەردەوام بوون',
     student_login_desc: 'ئیمەیڵ و وشەی نهێنییەکە بەکاربێنە کە بەڕێوەبەری پۆلەکەت پێتداوە.',
     student_login_btn: 'چوونە ژووەوە',
     student_logout: 'چوونە دەرەوە',
-    student_logged_as: 'چوویتەژووەوە وەک',
+    student_logged_as: 'چوویتەژورەوە وەک',
     login_error: 'ئیمەیڵ یان وشەی نهێنی هەڵەیە — دووبارە هەوڵبدەرەوە.',
     already_sent: 'پێشتر پەیامت نێردووە. دەرببە بۆ گەڕانەوە.',
-    teacher_login_title: 'بچووژێوە بۆ بەردەوام بوون',
+    teacher_login_title: 'بچۆ ژوورەوە بۆ بەردەوام بوون',
     teacher_login_desc: 'ئیمەیڵ و وشەی نهێنییەکە بەکاربێنە کە بەڕێوەبەری پۆلەکەت پێتداوە.',
     teacher_login_btn: 'چوونە ژووەوە',
     teacher_logout: 'چوونە دەرەوە',
@@ -351,7 +351,7 @@ function buildStudentPanel() {
           <div class="field">
             <label class="field-label">${t('email')}</label>
             <input id="sl-email" class="field-input" type="email"
-              placeholder="your@school.email" autocomplete="email"/>
+              placeholder="your@epu.com" autocomplete="email"/>
           </div>
           <div class="field">
             <label class="field-label">${t('password')}</label>
@@ -502,7 +502,7 @@ function buildTeacherPanel() {
           <div class="field">
             <label class="field-label">${t('email')}</label>
             <input id="tl-email" class="field-input" type="email"
-              placeholder="your@school.email" autocomplete="email"/>
+              placeholder="your@epu.com" autocomplete="email"/>
           </div>
           <div class="field">
             <label class="field-label">${t('password')}</label>
@@ -735,7 +735,7 @@ function buildReviewPanel() {
         <div class="glass-card">
           <div class="field">
             <label class="field-label">${t('email')}</label>
-            <input id="r-email" class="field-input" type="email" placeholder="your@email.com" autocomplete="email"/>
+            <input id="r-email" class="field-input" type="email" placeholder="your@epu.com" autocomplete="email"/>
           </div>
           <div class="field">
             <label class="field-label">${t('password')}</label>
