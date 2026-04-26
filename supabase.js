@@ -64,10 +64,10 @@ async function dbInsertStudentMessage({ message, tagged_classmate }) {
 async function dbGetStudentMessages() {
   const { data, error } = await sb
     .from('student_messages')
-    .select('*')
+    .select('id, created_at, message, tagged_classmate, sender_name, user_id')
     .order('created_at', { ascending: false });
-  if (error) throw error;
-  return data;
+  if (error) throw new Error(error.message || JSON.stringify(error));
+  return data || [];
 }
 
 // ── Teacher messages ─────────────────────────────────────────
@@ -80,10 +80,10 @@ async function dbInsertTeacherMessages(rows) {
 async function dbGetTeacherMessages() {
   const { data, error } = await sb
     .from('teacher_messages')
-    .select('*')
+    .select('id, created_at, teacher_name, student_name, message')
     .order('teacher_name');
-  if (error) throw error;
-  return data;
+  if (error) throw new Error(error.message || JSON.stringify(error));
+  return data || [];
 }
 
 // ── Teacher Auth ─────────────────────────────────────────
