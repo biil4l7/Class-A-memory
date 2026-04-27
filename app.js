@@ -899,7 +899,7 @@ const welcomeI18n = {
     eyebrow:  'A message from the creator',
     msg:      'I created this for all of us — so it\'ll stay in our memory forever. Always remember the time we spent together. I hope we\'re all glad that we got to meet each other. 🤍',
     enter:    'Enter',
-    sig:      'MIS - Class A · 2025 - 2026',
+    sig:      'MIS  Class A · 2025 - 2026',
   },
   ar: {
     eyebrow:  'رسالة من المنشئ',
