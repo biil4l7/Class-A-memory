@@ -780,7 +780,11 @@ async function initReview() {
   buildReviewPanel();
   try {
     const session = await dbGetSession();
-    if (session) showReviewContent();
+    // Only auto-show content if the logged-in user is an admin
+    const adminEmails = ['rayanh@gmail.com', 'dina@gmail.com'];
+    if (session && adminEmails.includes(session.user.email)) {
+      showReviewContent();
+    }
   } catch (e) { console.error(e); }
 }
 
@@ -788,6 +792,14 @@ async function adminLogin() {
   const email = $('r-email').value.trim();
   const pass  = $('r-pass').value;
   if (!email || !pass) { toast('Enter email and password'); return; }
+
+  // Only allow admin emails into the review panel
+  const adminEmails = ['rayanh@gmail.com', 'dina@gmail.com'];
+  if (!adminEmails.includes(email)) {
+    toast('Access denied — admin only');
+    return;
+  }
+
   const btn = document.querySelector('#r-login-wrap .btn-primary');
   if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>'; }
   try {
@@ -899,19 +911,19 @@ const welcomeI18n = {
     eyebrow:  'A message from the creator',
     msg:      'I created this for all of us — so it\'ll stay in our memory forever. Always remember the time we spent together. I hope we\'re all glad that we got to meet each other. 🤍',
     enter:    'Enter',
-    sig:      'MIS  Class A · 2025 - 2026',
+    sig:      'Class A · 2025',
   },
   ar: {
     eyebrow:  'رسالة من المنشئ',
     msg:      'أنشأت هذا لأجلنا جميعاً — لكي يبقى في ذاكرتنا إلى الأبد. تذكّروا دائماً الوقت الذي قضيناه معاً. آمل أن نكون جميعاً سعداء بلقائنا ببعض. 🤍',
     enter:    'دخول',
-    sig:      'الصف A · ٢٠٢٥ - ٢٠٢٦',
+    sig:      'الصف أ · ٢٠٢٥',
   },
   ku: {
-    eyebrow:  'پەیامێک لە دروستکەرەوە',
+    eyebrow:  'پەیامێک لە دروستکەر',
     msg:      'بۆ ئەوە دروستم کرد کە لە بیرەوەریماندا بمێنێتەوە و هەموو کات ئەو کاتانەمان بیربهێنینەوە کە پێکەوە بەسەرمان برد، هیوادارم هەموومان دڵخۆش بین بەوەی کە یەکتریمان ناسی.',
     enter:    'بچۆ ژوورەوە',
-    sig:      'بەشی سیستەمی زانیاری- کڵاسی A · ٢٠٢٥ - ٢٠٢٦',
+    sig:      'کڵاسی A · ٢٠٢٥',
   },
 };
 
