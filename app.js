@@ -899,19 +899,19 @@ const welcomeI18n = {
     eyebrow:  'A message from the creator',
     msg:      'I created this for all of us — so it\'ll stay in our memory forever. Always remember the time we spent together. I hope we\'re all glad that we got to meet each other. 🤍',
     enter:    'Enter',
-    sig:      'Class A · 2025',
+    sig:      'MIS - Class A · 2025 - 2026',
   },
   ar: {
     eyebrow:  'رسالة من المنشئ',
     msg:      'أنشأت هذا لأجلنا جميعاً — لكي يبقى في ذاكرتنا إلى الأبد. تذكّروا دائماً الوقت الذي قضيناه معاً. آمل أن نكون جميعاً سعداء بلقائنا ببعض. 🤍',
     enter:    'دخول',
-    sig:      'الصف أ · ٢٠٢٥',
+    sig:      'الصف A · ٢٠٢٥ - 2026',
   },
   ku: {
     eyebrow:  'پەیامێک لە دروستکەر',
     msg:      'بۆ ئەوە دروستم کرد کە لە بیرەوەریماندا بمێنێتەوە و هەموو کات ئەو کاتانەمان بیربهێنینەوە کە پێکەوە بەسەرمان برد، هیوادارم هەموومان دڵخۆش بین بەوەی کە یەکتریمان ناسی.',
     enter:    'بچۆ ژوورەوە',
-    sig:      'کڵاسی A · ٢٠٢٥',
+    sig:      'بەشی سیستەمی زانیاری- کڵاسی A · ٢٠٢٥ - ٢٠٢٦',
   },
 };
 
