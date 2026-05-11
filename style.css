@@ -532,6 +532,23 @@ body::after {
 .chip.selected::before { transform: translateX(0); }
 .chip:hover:not(.selected) { border-color: rgba(213,87,94,0.4); color: var(--blush); }
 
+/* ── Whole-class chip (Class A) ───────────────────────────── */
+.chip-whole-class {
+  border-color: rgba(213,87,94,0.35);
+  color: var(--blush);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 4px;
+  background: rgba(182,42,45,0.07);
+}
+.chip-whole-class.selected {
+  border-color: var(--rose);
+  background: rgba(182,42,45,0.18);
+  box-shadow: 0 0 16px rgba(213,87,94,0.2);
+}
+
 .chip-counter {
   font-size: 11px;
   color: rgba(254,254,254,0.3);
