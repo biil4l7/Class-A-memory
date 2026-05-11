@@ -1347,6 +1347,7 @@ input, textarea, select {
 }
 
 /* ── Close / Enter button ──────────────────────────────── */
+/* ── Close / Enter button ──────────────────────────────── */
 .welcome-close-btn {
   display: inline-flex;
   align-items: center;
