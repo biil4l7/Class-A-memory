@@ -846,18 +846,14 @@ body::after {
 ::-webkit-scrollbar-thumb { background: rgba(213,87,94,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--rose); }
 
-/* ── Responsive — Mobile First ────────────────────────────── */
 
-/* Prevent tap highlight & zoom on inputs on iOS */
 input, textarea, select, button {
   -webkit-tap-highlight-color: transparent;
 }
 input, textarea, select {
-  font-size: 16px; /* prevents iOS auto-zoom on focus */
-}
+  font-size: 16px; 
 
 @media (max-width: 600px) {
-  /* Hero */
   .hero {
     padding: 3.5rem 1.25rem 2rem;
   }
@@ -873,7 +869,7 @@ input, textarea, select {
     height: 280px;
   }
 
-  /* Nav tabs — full width, easier to tap */
+
   .nav-wrap {
     padding: 0 1rem 1.5rem;
   }
@@ -890,22 +886,21 @@ input, textarea, select {
     text-align: center;
   }
 
-  /* Panels */
+ 
   .panels {
     padding: 0 1rem 5rem;
   }
 
-  /* Cards */
+
   .glass-card {
     padding: 1.25rem 1rem;
   }
 
-  /* Forms — larger touch targets */
   .field-input,
   .field-select,
   .field-textarea {
     padding: 14px 14px;
-    font-size: 16px; /* no zoom on iOS */
+    font-size: 16px; 
     border-radius: var(--radius-sm);
   }
   .field-textarea {
@@ -916,7 +911,6 @@ input, textarea, select {
     min-height: 90px;
   }
 
-  /* Buttons — full width on small screens */
   .btn {
     width: 100%;
     justify-content: center;
@@ -924,7 +918,6 @@ input, textarea, select {
     font-size: 12px;
   }
 
-  /* Steps row — compact on mobile */
   .steps-row {
     margin-bottom: 1.5rem;
     overflow-x: auto;
@@ -938,7 +931,6 @@ input, textarea, select {
     margin: 0 6px;
   }
 
-  /* Chips grid — smaller chips */
   .chips-grid {
     gap: 6px;
   }
@@ -947,12 +939,10 @@ input, textarea, select {
     padding: 8px 12px;
   }
 
-  /* Step 2 back/next row */
   div[style*="display:flex"][style*="gap:10px"] {
     flex-direction: column;
   }
 
-  /* Student badge */
   .student-badge {
     flex-direction: column;
     align-items: flex-start;
@@ -966,7 +956,6 @@ input, textarea, select {
     padding: 10px 16px !important;
   }
 
-  /* Review tabs */
   .review-tabs {
     flex-direction: column;
     gap: 8px;
@@ -978,7 +967,6 @@ input, textarea, select {
     font-size: 11px;
   }
 
-  /* Review cards */
   .review-card {
     padding: 1rem;
   }
@@ -988,7 +976,6 @@ input, textarea, select {
     gap: 4px;
   }
 
-  /* Toast — avoid bottom nav overlap */
   #toast {
     bottom: 1.5rem;
     max-width: calc(100vw - 2rem);
@@ -1013,10 +1000,8 @@ input, textarea, select {
     padding: 14px 24px;
   }
 
-  /* Orbs — hide for performance */
   .orb { display: none; }
 
-  /* Admin bar */
   .admin-bar {
     flex-direction: column;
     align-items: flex-start;
@@ -1026,28 +1011,21 @@ input, textarea, select {
     width: auto;
   }
 
-  /* Login wrap */
   .login-wrap {
     max-width: 100%;
   }
 
-  /* Success */
   .success-wrap {
     padding: 3rem 0.5rem;
   }
 }
 
-/* Slightly larger phones / small tablets */
 @media (min-width: 601px) and (max-width: 768px) {
   .hero { padding: 4rem 1.5rem 2.5rem; }
   .panels { padding: 0 1.25rem 5rem; }
   .tab-btn { padding: 10px 20px; }
 }
-/* ══════════════════════════════════════════════════════════
-   Student Login Gate — new additions
-   ══════════════════════════════════════════════════════════ */
 
-/* Login icon above the card */
 .login-icon {
   font-size: 2.5rem;
   text-align: center;
@@ -1072,7 +1050,6 @@ input, textarea, select {
   letter-spacing: 0.3px;
 }
 
-/* Signed-in badge shown above the message form */
 .student-badge {
   display: flex;
   align-items: center;
@@ -1124,7 +1101,6 @@ input, textarea, select {
   flex-shrink: 0;
 }
 
-/* Read-only name display (replaces the dropdown) */
 .field-readonly {
   width: 100%;
   padding: 13px 16px;
@@ -1156,7 +1132,6 @@ input, textarea, select {
   left: 14px;
 }
 
-/* Input field (re-usable, used in both login gates) */
 .field-input {
   width: 100%;
   background: rgba(254,254,254,0.04);
@@ -1175,9 +1150,6 @@ input, textarea, select {
   border-color: var(--rose);
   box-shadow: 0 0 0 3px rgba(213,87,94,0.08);
 }
-/* ══════════════════════════════════════════════════════════
-   WELCOME MODAL
-   ══════════════════════════════════════════════════════════ */
 
 .welcome-overlay {
   position: fixed;
@@ -1238,7 +1210,6 @@ input, textarea, select {
   to   { opacity: 1; transform: translateY(0)    scale(1);    }
 }
 
-/* ── Gem row ───────────────────────────────────────────── */
 .welcome-gem-row {
   display: flex;
   justify-content: center;
@@ -1256,7 +1227,6 @@ input, textarea, select {
   50%       { box-shadow: 0 0 28px rgba(213,87,94,0.9), 0 0 50px rgba(213,87,94,0.3); }
 }
 
-/* ── Language bar inside modal ─────────────────────────── */
 .welcome-lang-bar {
   display: flex;
   justify-content: center;
@@ -1346,8 +1316,6 @@ input, textarea, select {
   margin: 0 auto;
 }
 
-/* ── Close / Enter button ──────────────────────────────── */
-/* ── Close / Enter button ──────────────────────────────── */
 .welcome-close-btn {
   display: inline-flex;
   align-items: center;
