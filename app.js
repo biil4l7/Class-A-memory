@@ -431,6 +431,16 @@ async function studentLogin() {
 
   try {
     const data = await dbStudentLogin(email, pass);
+    const role = data.session?.user?.user_metadata?.role;
+
+    // Block teachers and admins from using the Students tab
+    if (role === 'teacher' || ADMIN_EMAILS.includes(data.session?.user?.email)) {
+      await dbStudentLogout();
+      toast('⚠ This login is for students only.');
+      if (btn) { btn.disabled = false; btn.innerHTML = t('student_login_btn') + ' <span class="btn-icon">→</span>'; }
+      return;
+    }
+
     studentSession = data.session;
     buildStudentPanel();
   } catch (e) {
@@ -603,21 +613,25 @@ function renderTeacherStep() {
       </div>`;
 
   } else if (tStep === 2) {
+    // "Class A" is a special whole-class chip — shown first and styled distinctly
+    const classASelected = teacherSelectedStudents.includes('Class A');
+    const classAChip = `<div class="chip chip-whole-class ${classASelected ? 'selected' : ''}" onclick="toggleChip(this,'Class A')"><span>✦ Class A (whole class)</span></div>`;
     const chipsHtml = STUDENT_NAMES.map(n => {
       const selected = teacherSelectedStudents.includes(n);
       return `<div class="chip ${selected ? 'selected' : ''}" onclick="toggleChip(this,'${n}')"><span>${n}</span></div>`;
     }).join('');
+    const canProceed = teacherSelectedStudents.length >= 1 && teacherSelectedStudents.length <= 3;
     inner.innerHTML = `
       <div class="glass-card">
         <div class="steps-row">${stepsHtml}</div>
         <div class="field-label" style="margin-bottom:12px">${t('pick_students')}</div>
-        <div class="chips-grid">${chipsHtml}</div>
+        <div class="chips-grid">${classAChip}${chipsHtml}</div>
         <div class="chip-counter" id="chip-count">
           <span id="chip-num">${teacherSelectedStudents.length}</span> / 3 ${t('selected_of')}
         </div>
         <div style="display:flex;gap:10px;margin-top:0.5rem">
           <button class="btn btn-ghost" onclick="tStep=1;renderTeacherStep()">← Back</button>
-          <button class="btn btn-primary" id="t-next2" onclick="teacherStep2Next()" ${teacherSelectedStudents.length !== 3 ? 'disabled' : ''}>
+          <button class="btn btn-primary" id="t-next2" onclick="teacherStep2Next()" ${!canProceed ? 'disabled' : ''}>
             ${t('continue')} <span class="btn-icon">→</span>
           </button>
         </div>
@@ -676,18 +690,33 @@ function toggleChip(chipEl, name) {
     chipEl.classList.remove('selected');
     teacherSelectedStudents = teacherSelectedStudents.filter(s => s !== name);
   } else {
-    if (teacherSelectedStudents.length >= 3) { toast('Maximum 3 students'); return; }
-    chipEl.classList.add('selected');
-    teacherSelectedStudents.push(name);
+    // If "Class A" is picked, clear all others (it stands alone)
+    if (name === 'Class A') {
+      document.querySelectorAll('.chip.selected').forEach(c => c.classList.remove('selected'));
+      teacherSelectedStudents = [];
+      chipEl.classList.add('selected');
+      teacherSelectedStudents.push('Class A');
+    } else {
+      // If "Class A" was previously selected, deselect it first
+      if (teacherSelectedStudents.includes('Class A')) {
+        document.querySelectorAll('.chip-whole-class').forEach(c => c.classList.remove('selected'));
+        teacherSelectedStudents = teacherSelectedStudents.filter(s => s !== 'Class A');
+      }
+      if (teacherSelectedStudents.length >= 3) { toast('Maximum 3 students'); return; }
+      chipEl.classList.add('selected');
+      teacherSelectedStudents.push(name);
+    }
   }
   const numEl = $('chip-num');
   if (numEl) numEl.textContent = teacherSelectedStudents.length;
   const btn = $('t-next2');
-  if (btn) btn.disabled = teacherSelectedStudents.length !== 3;
+  const canProceed = teacherSelectedStudents.length >= 1 && teacherSelectedStudents.length <= 3;
+  if (btn) btn.disabled = !canProceed;
 }
 
 function teacherStep2Next() {
-  if (teacherSelectedStudents.length !== 3) { toast('Pick exactly 3 students'); return; }
+  if (teacherSelectedStudents.length < 1) { toast('Pick at least 1 student'); return; }
+  if (teacherSelectedStudents.length > 3)  { toast('Maximum 3 students');       return; }
   tStep = 3;
   renderTeacherStep();
 }
@@ -780,11 +809,7 @@ async function initReview() {
   buildReviewPanel();
   try {
     const session = await dbGetSession();
-    // Only auto-show content if the logged-in user is an admin
-    const adminEmails = ['rayanh@gmail.com', 'dina@gmail.com'];
-    if (session && adminEmails.includes(session.user.email)) {
-      showReviewContent();
-    }
+    if (session) showReviewContent();
   } catch (e) { console.error(e); }
 }
 
@@ -792,14 +817,6 @@ async function adminLogin() {
   const email = $('r-email').value.trim();
   const pass  = $('r-pass').value;
   if (!email || !pass) { toast('Enter email and password'); return; }
-
-  // Only allow admin emails into the review panel
-  const adminEmails = ['rayanh@gmail.com', 'dina@gmail.com'];
-  if (!adminEmails.includes(email)) {
-    toast('Access denied — admin only');
-    return;
-  }
-
   const btn = document.querySelector('#r-login-wrap .btn-primary');
   if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>'; }
   try {
@@ -911,19 +928,19 @@ const welcomeI18n = {
     eyebrow:  'A message from the creator',
     msg:      'I created this for all of us — so it\'ll stay in our memory forever. Always remember the time we spent together. I hope we\'re all glad that we got to meet each other. 🤍',
     enter:    'Enter',
-    sig:      'MIS Class A · 2025 - 2026',
+    sig:      'Class A · 2025',
   },
   ar: {
     eyebrow:  'رسالة من المنشئ',
     msg:      'أنشأت هذا لأجلنا جميعاً — لكي يبقى في ذاكرتنا إلى الأبد. تذكّروا دائماً الوقت الذي قضيناه معاً. آمل أن نكون جميعاً سعداء بلقائنا ببعض. 🤍',
     enter:    'دخول',
-    sig:      'الصف A ·٢٠٢٦ - ٢٠٢٥',
+    sig:      'الصف أ · ٢٠٢٥',
   },
   ku: {
-    eyebrow:  'پەیامێک لە دروستکەرەوە',
+    eyebrow:  'پەیامێک لە دروستکەر',
     msg:      'بۆ ئەوە دروستم کرد کە لە بیرەوەریماندا بمێنێتەوە و هەموو کات ئەو کاتانەمان بیربهێنینەوە کە پێکەوە بەسەرمان برد، هیوادارم هەموومان دڵخۆش بین بەوەی کە یەکتریمان ناسی.',
     enter:    'بچۆ ژوورەوە',
-    sig:      'بەشی سیستەمی زانیاری- کڵاسی A · ٢٠٢٥ - ٢٠٢٦',
+    sig:      'کڵاسی A · ٢٠٢٥',
   },
 };
 
